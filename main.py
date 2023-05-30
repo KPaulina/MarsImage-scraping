@@ -12,11 +12,11 @@ soup = soup.find(id='product-section')
 
 link_endings = []
 images = []
-
+#finding links to sub pages
 for link in soup.find_all('a'):
     link_endings.append(link.get('href'))
 
-
+#findng full images
 for ending in set(link_endings):
     r = requests.get(f"{url}{ending}", headers=headers)
     soup = BeautifulSoup(r.text, 'html.parser')
@@ -26,8 +26,8 @@ for ending in set(link_endings):
             images.append(href_links)
 
 
+#saving images
 for image in images:
-
     with open(image.replace('/', '_'), 'wb') as f:
         im = requests.get(f"{url}{image}", headers=headers)
         f.write(im.content)
